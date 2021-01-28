@@ -552,4 +552,8 @@ class Kartu extends Core_Controller{
 	                $callback['Error']      = true;
 	            }
 
-	            echo json_encode($ca
+	            echo json_encode($callback);
+		    }
+		// KIRIM KARTU
+	// ADMIN
+}
