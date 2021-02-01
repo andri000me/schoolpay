@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2021 at 11:46 AM
+-- Generation Time: Feb 01, 2021 at 01:38 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -44,7 +44,6 @@ CREATE TABLE `biodata_sekolah` (
   `kepala_sekolah` varchar(30) NOT NULL,
   `nip_kepala_sekolah` varchar(16) NOT NULL,
   `logo` varchar(255) DEFAULT NULL,
-  `tt_kepala_sekolah` varchar(255) DEFAULT NULL,
   `stample` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -52,8 +51,8 @@ CREATE TABLE `biodata_sekolah` (
 -- Dumping data for table `biodata_sekolah`
 --
 
-INSERT INTO `biodata_sekolah` (`id`, `sekolah`, `nisn`, `alamat`, `kode_pos`, `tlp`, `kelurahan`, `kecamatan`, `kabupaten`, `provinsi`, `website`, `email`, `kepala_sekolah`, `nip_kepala_sekolah`, `logo`, `tt_kepala_sekolah`, `stample`) VALUES
-(1, 'SMK Pembaharuan Purworejo', '5236127', 'Jln Kesatrian No 7 Purworejo', '54115', '0275322386', 'Pangen Juru Tengah', 'Purworejo', 'Purworejo', 'Jawa Tengah', 'smkpn-pn2pwr.sch.id', 'zaey_pandawa@yahoo.com', 'H.Suhad,S.Pd,M.MPd', '1234245367', NULL, NULL, NULL);
+INSERT INTO `biodata_sekolah` (`id`, `sekolah`, `nisn`, `alamat`, `kode_pos`, `tlp`, `kelurahan`, `kecamatan`, `kabupaten`, `provinsi`, `website`, `email`, `kepala_sekolah`, `nip_kepala_sekolah`, `logo`, `stample`) VALUES
+(1, 'SMK Pembaharuan Purworejo', '5236127', 'Jln Kesatrian No 7 Purworejo', '54115', '0275322386', 'Pangen Juru Tengah', 'Purworejo', 'Purworejo', 'Jawa Tengah', 'smkpn-pn2pwr.sch.id', 'zaey_pandawa@yahoo.com', 'H.Suhad,S.Pd,M.MPd', '1234245367', 'data/biodatasekolah/logo.jpeg', 'data/biodatasekolah/stample.png');
 
 -- --------------------------------------------------------
 
@@ -110,7 +109,7 @@ INSERT INTO `data_siswa` (`nis`, `nama`, `status_kelas`, `program_studi`, `kode_
 ('1000028', 'Siswa 28', 10, 'TKJ', '1', 'Y', '', 'T', NULL, 's1000028', NULL),
 ('1000029', 'Siswa 29', 10, 'TKJ', '1', 'Y', '', 'T', NULL, 's1000029', NULL),
 ('1000030', 'Siswa 30', 10, 'TKJ', '1', 'Y', '', 'T', NULL, 's1000030', NULL),
-('1000031', 'Siswa 31', 10, 'MM', '1', 'Y', '', 'T', NULL, 's1000031', 'app-assets/images/fotosiswa/1000031.png'),
+('1000031', 'Siswa 31', 10, 'MM', '1', 'Y', '', 'T', NULL, 's1000031', 'data/fotosiswa/1000031.png'),
 ('1000032', 'Siswa 32', 10, 'MM', '1', 'Y', '', 'T', NULL, 's1000032', NULL),
 ('1000033', 'Siswa 33', 10, 'MM', '1', 'Y', '', 'T', NULL, 's1000033', NULL),
 ('1000034', 'Siswa 34', 10, 'MM', '1', 'Y', '', 'T', NULL, 's1000034', NULL),
@@ -3834,21 +3833,6 @@ CREATE TABLE `pengumuman_hd` (
   `tipe` enum('general','pembayaran') DEFAULT 'general'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `pengumuman_hd`
---
-
-INSERT INTO `pengumuman_hd` (`id_pengumuman`, `judul`, `message`, `tanggal`, `petugas`, `tipe`) VALUES
-('1', 'test', '<p>ashkdbhkasbdjsajldas</p>', '2021-01-11 17:13:11', '1', 'general'),
-('2', 'Test', '<h1>TEST</h1>\r\n<p>lasndask</p>\r\n<p><strong>jansjdasndljasn<em>khasjbdasjndkajsdnasjdn</em></strong></p>', '2021-01-12 20:19:21', '1', 'general'),
-('3', 'test2', '<h1>adasasjdhasHBASD</h1>\r\n<h2>asdsadsdas</h2>\r\n<p>asdhasdkasd</p>', '2021-01-19 12:43:06', '1', 'general'),
-('4', 'test3', '<h1>asdasdasdasd as</h1>\r\n<p>asdasasdasdasdasd</p>', '2021-01-19 12:59:44', '1', 'general'),
-('5', 'Tunggakan Pembayaran', 'Mohon segera selesaikan pembayaran', '2021-01-27 07:50:53', '1', 'pembayaran'),
-('6', 'Tunggakan Pembayaran', 'Mohon segera selesaikan pembayaran', '2021-01-27 08:49:52', '1', 'pembayaran'),
-('7', 'Pemberitahuan Pembayaran', 'Mohon segera selesaikan pembayaran', '2021-01-28 11:17:27', '1', 'pembayaran'),
-('8', 'Pemberitahuan Pembayaran', 'Mohon segera selesaikan pembayaran', '2021-01-28 11:28:31', '1', 'general'),
-('9', 'Pemberitahuan Pembayaran', 'Mohon segera selesaikan pembayaran', '2021-01-28 11:28:38', '1', 'general');
-
 -- --------------------------------------------------------
 
 --
@@ -3930,14 +3914,6 @@ CREATE TABLE `ujian` (
   `tipe_ujian` enum('online','offline') DEFAULT 'offline'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `ujian`
---
-
-INSERT INTO `ujian` (`id_ujian`, `nama_ujian`, `tanggal_ujian`, `audit_user`, `keterangan`, `max_siswa`, `tipe_ujian`) VALUES
-(1, 'Test Ujian', '2021-01-28 16:30:00', '1', '-', 25, 'offline'),
-(2, 'Test Ujian 2', '2021-02-05 18:25:00', '1', 'ahsd', 25, 'online');
-
 -- --------------------------------------------------------
 
 --
@@ -3953,19 +3929,6 @@ CREATE TABLE `ujian_kartu` (
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `ujian_kartu`
---
-
-INSERT INTO `ujian_kartu` (`id_ujian`, `id_kartu`, `nis`, `audit_user`, `ruangan`, `username`, `password`) VALUES
-(1, 1, '1000031', '1', 'B-01', NULL, NULL),
-(2, 2, '1000001', '1', 'B-02', '1000001', '59e711d152de7bec7304a8c2ecaf9f0f'),
-(2, 4, '1000031', '1', 'B-02', '1000031', '3b22d69d80b915ec9e3b838b4bb9fa7b'),
-(1, 5, '1000032', '1', NULL, '1000032', 'fd8e99b43d8cf077d7d275f2c5282bc9'),
-(1, 6, '1000033', '1', NULL, '1000033', 'd8859e5fda6df467c73962e43a0143bb'),
-(1, 7, '1000034', '1', NULL, '1000034', '3b3a00e287d59a53451b1b86835de93f'),
-(1, 8, '1000161', '1', NULL, '1000161', 'f0faf8002c48b4b08ecd805a066406a9');
 
 --
 -- Indexes for dumped tables
@@ -4167,12 +4130,12 @@ ALTER TABLE `rombel`
 -- AUTO_INCREMENT for table `ujian`
 --
 ALTER TABLE `ujian`
-  MODIFY `id_ujian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_ujian` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `ujian_kartu`
 --
 ALTER TABLE `ujian_kartu`
-  MODIFY `id_kartu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;COMMIT;
+  MODIFY `id_kartu` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

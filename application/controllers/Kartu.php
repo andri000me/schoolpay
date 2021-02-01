@@ -523,15 +523,15 @@ class Kartu extends Core_Controller{
 	                        'judul'         => $judul,
 	                        'message'       => $message,
 	                        'tanggal'       => date('Y-m-d H:i:s'),
-	                        'petugas'       => $this->session->userdata("id_pengguna")
+	                        'petugas'       => $this->session->userdata("id_pengguna"),
+	                        'tipe'			=> 'pembayaran'
 	                    );
 	                    $insert = $this->M_wsbangun->insertData('default', 'pengumuman_hd', $datahd);
 	                // INSERT HEADER
 
                     $datadt = array(
                         'id_pengumuman' => $id_pengumuman,
-                        'nis'           => $nis,
-                        'tipe'			=> 'pembayaran'
+                        'nis'           => $nis
                     );
 
                     $insert = $this->M_wsbangun->insertData('default', 'pengumuman_dt', $datadt);
