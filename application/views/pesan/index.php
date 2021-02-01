@@ -46,7 +46,7 @@
                                             <div class="media border-bottom-blue-grey border-bottom-lighten-4" style="padding: 15px 21px 10px 21px;">
                                                 <div class="media-left">
                                                     <span class="avatar avatar-md">
-                                                        <img class="media-object rounded-circle" src="<?= base_url('app-assets/images/profile.png'); ?>" id="header-picture">
+                                                        <img class="media-object rounded-circle" src="<?= base_url('app-assets/images/no-profile.png'); ?>" id="header-picture">
                                                     </span>
                                                 </div>
                                                 <div class="media-body w-100 pl-1"  style="height: auto;">

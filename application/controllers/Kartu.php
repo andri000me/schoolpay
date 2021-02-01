@@ -6,10 +6,6 @@ class Kartu extends Core_Controller{
         $this->session->set_userdata('title', 'Cetak Kartu');
     }
 
-    public function index(){
-    	$this->load_content_admin('kartu/index');
-    }
-
     // ADMIN
     	public function admin(){
 	    	$this->adminOnly();
@@ -472,7 +468,7 @@ class Kartu extends Core_Controller{
 	                        'nis'     		=> $nis,
 	                        'audit_user'	=> $this->session->userdata("id_pengguna"),
 	                        'username'		=> $nis,
-	                        'password'		=> md5($nis),
+	                        'password'		=> $this->generatePassword(5),
 	                        'ruangan' 		=> '1 - R1'
 	                    );
 
@@ -556,4 +552,218 @@ class Kartu extends Core_Controller{
 		    }
 		// KIRIM KARTU
 	// ADMIN
+
+	// SISWA
+		public function index(){
+			$this->load->view('kartu/index');
+		}
+
+		public function loadKartu(){
+			$id_pengguna = substr($this->session->userdata("id_pengguna"), 1);
+            $callback   = "";
+
+            // GET DATA
+				$query_kartu = "
+		    		SELECT 
+					    kartu.id_kartu,
+						ujian.nama_ujian,
+						ujian.tanggal_ujian,
+						ujian.tipe_ujian,
+					    kartu.nis,
+		                siswa.nama,
+					    kartu.ruangan,
+					    kartu.username,
+					    kartu.password
+					FROM ujian_kartu AS kartu 
+					LEFT JOIN ujian
+					ON 
+		            	kartu.id_ujian = ujian.id_ujian
+		            INNER JOIN data_siswa AS siswa
+		            ON 
+		            	kartu.nis = siswa.nis
+					WHERE siswa.nis = '$id_pengguna'
+		    	";
+
+		        $res_kartu = $this->M_wsbangun->getData_by_query('default', $query_kartu);
+		    // GET DATA
+
+		    // PROSES DATA
+		        $singkatan = "";
+		        $temp = explode(' ', $res_kartu[0]->nama_ujian);
+
+		        foreach ($temp as $val) {
+			        $singkatan .= strtoupper(substr($val, 0, 1));
+		        }
+
+		        $tanggal = date_format(date_create($res_kartu[0]->tanggal_ujian),"d F Y");
+		        $jam = date_format(date_create($res_kartu[0]->tanggal_ujian),"H:i");
+		    // PROSES DATA
+            
+            if ($res_kartu) {
+            	$callback .= "<iframe name='iframe1' style='display: none;'></iframe>";
+                foreach ($res_kartu as $value){
+                    if ($value->tipe_ujian == 'offline') {
+                        $tipe_bg    = 'btn-warning';
+                    } 
+                    else {
+                        $tipe_bg    = 'btn-success';
+                    }
+
+                    $callback .= "<div class='row mb-0 mt-0'>";
+                    $callback .=    "<div class='card col-12 mx-0 px-0'>";
+                    $callback .=        "<div class='card-header bg-primary bg-accent-1' id='heading_$value->id_kartu' data-toggle='collapse' data-target='#collapse_$value->id_kartu' aria-expanded='false' aria-controls='collapse_$value->id_kartu' style='cursor:pointer;'>";
+                    $callback .=            "<h3 class='mb-0'>";
+                    $callback .=                "<span class='float-left'>";
+                    $callback .=                    "<b>$value->nama_ujian</b>";
+                    $callback .=                "</span>";
+                    $callback .=                "<span class='float-right'>";
+                    $callback .=                    "<button class='btn btn-md $tipe_bg'>".strtoupper($value->tipe_ujian)."</button>";
+                    $callback .=                "</span>";
+                    $callback .=            "</h3>";
+                    $callback .=        "</div>";
+                    $callback .=        "<div id='collapse_$value->id_kartu' class='collapse' aria-labelledby='heading_$value->id_kartu'>";
+                    $callback .=            "<div class='card-body'>";
+                    $callback .= 				"<a target='iframe1' href='". base_url("Kartu/cetakKartuUjian/").$value->id_kartu ."' class='btn btn-lg btn-block btn-primary'>Cetak Kartu</a>";
+                    $callback .= 			"</div>";
+                    $callback .=        "</div>";
+                    $callback .=    "</div>";
+                    $callback .= "</div>";
+                }
+            }
+            else{
+                $callback .= "<div class='row mb-0 mt-2'>";
+                $callback .=    "<div class='col-12'>";
+                $callback .=        "<h3 class='card-title text-center'> Tidak ada Kartu Ujian </h3>";
+                $callback .=    "</div>";
+                $callback .= "</div>";
+            }
+
+            echo $callback;
+		}
+	// SISWA
+
+	public function cetakKartuUjian($id){
+		// GET DATA
+			$query_kartu = "
+	    		SELECT 
+				    kartu.id_kartu,
+					ujian.nama_ujian,
+					ujian.tanggal_ujian,
+					ujian.tipe_ujian,
+				    kartu.nis,
+	                siswa.nama,
+	                kelas.kelas,
+	                siswa.program_studi,
+	                siswa.kode_kelas,
+	                prodi.program_studi AS prodi,
+	                siswa.foto,
+				    kartu.ruangan,
+				    kartu.username,
+				    kartu.password
+				FROM ujian_kartu AS kartu 
+				LEFT JOIN ujian
+				ON 
+	            	kartu.id_ujian = ujian.id_ujian
+	            INNER JOIN data_siswa AS siswa
+	            ON 
+	            	kartu.nis = siswa.nis
+	            INNER JOIN kelas
+	        	ON 
+	            	siswa.status_kelas = kelas.id_kelas
+	            INNER JOIN program_studi AS prodi
+	            ON
+	            	siswa.program_studi = prodi.id_program_studi
+				WHERE kartu.id_kartu = '$id'
+	    	";
+
+	        $res_kartu = $this->M_wsbangun->getData_by_query('default', $query_kartu);
+
+	        $query_sekolah = "SELECT * FROM biodata_sekolah";
+	        $res_sekolah = $this->M_wsbangun->getData_by_query('default', $query_sekolah);
+	    // GET DATA
+
+	    // PROSES DATA
+	        $singkatan = "";
+	        $temp = explode(' ', $res_kartu[0]->nama_ujian);
+
+	        foreach ($temp as $val) {
+		        $singkatan .= strtoupper(substr($val, 0, 1));
+	        }
+
+	        $tanggal = date_format(date_create($res_kartu[0]->tanggal_ujian),"d F Y");
+	        $jam = date_format(date_create($res_kartu[0]->tanggal_ujian),"H:i");
+
+	        $kelas = $res_kartu[0]->kelas ."-". $res_kartu[0]->program_studi ."-". $res_kartu[0]->kode_kelas;
+
+	        $foto = $res_kartu[0]->foto ? $res_kartu[0]->foto : "app-assets/images/no-profile.png";
+	    // PROSES DATA
+
+		$content = array(
+			'id_kartu' 			=> $id,
+			'nama_ujian' 		=> $res_kartu[0]->nama_ujian,
+			'singkatan_ujian' 	=> $singkatan,
+			'tanggal_ujian' 	=> $tanggal,
+			'jam_ujian'			=> $jam,
+			'tipe_ujian' 		=> $res_kartu[0]->tipe_ujian,
+			'nis' 				=> $res_kartu[0]->nis,
+			'nama_siswa' 		=> $res_kartu[0]->nama,
+			'kelas' 			=> $kelas,
+			'prodi'				=> $res_kartu[0]->prodi,
+			'foto'				=> $foto,
+			'ruangan'			=> $res_kartu[0]->ruangan,
+			'username'			=> $res_kartu[0]->username,
+			'password'			=> $res_kartu[0]->password,
+			'logo_sekolah'		=> $res_sekolah[0]->logo,
+			'nama_sekolah'		=> $res_sekolah[0]->sekolah,
+			'nama_kepsek'		=> $res_sekolah[0]->kepala_sekolah,
+			'stample'			=> $res_sekolah[0]->stample,
+		);
+
+		$this->load->view('kartu/cetakKartuUjian', $content);
+	}
+
+	public function exportToExcel($id){
+		$this->adminOnly();
+
+    	$query = "
+    		SELECT 
+				ujian.id_ujian,
+			    kartu.id_kartu,
+			    kartu.nis,
+                siswa.nama,
+                kelas.kelas,
+                siswa.program_studi,
+                siswa.kode_kelas,
+			    kartu.ruangan,
+			    kartu.username,
+			    kartu.password
+			FROM ujian 
+			RIGHT JOIN ujian_kartu AS kartu
+			ON 
+            	kartu.id_ujian = ujian.id_ujian
+            INNER JOIN data_siswa AS siswa
+            ON 
+            	kartu.nis = siswa.nis
+            INNER JOIN kelas
+        	ON 
+            	siswa.status_kelas = kelas.id_kelas
+			WHERE ujian.id_ujian = '$id'
+			ORDER BY id_ujian, ruangan, id_kartu
+    	";
+
+    	$res = $this->M_wsbangun->getData_by_query('default', $query);
+
+    	$content = array('dataujian' => $res);
+		$this->load->view('kartu/exportToExcel', $content);
+	}
+
+	private function generatePassword($length = 10) {
+	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $charactersLength = strlen($characters);
+	    $randomString = '';
+	    for ($i = 0; $i < $length; $i++) {
+	        $randomString .= $characters[rand(0, $charactersLength - 1)];
+	    }
+	    return $randomString;
+	}
 }

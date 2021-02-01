@@ -109,7 +109,7 @@
                     // DATA SISWA
                         var data_siswa = data.data_siswa;
                         if (data_siswa.foto == null) {
-                            $('#pic').prop('src', '<?= base_url('app-assets/images/profile.png') ?>');
+                            $('#pic').prop('src', '<?= base_url('app-assets/images/no-profile.png') ?>');
                         }
                         else{
                             $('#pic').prop('src', '<?= base_url() ?>'+data_siswa.foto);

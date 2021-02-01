@@ -1,4 +1,6 @@
 <!-- CONTENT -->
+    <iframe name="iframe1" style="display: none;"></iframe>
+
     <div class="container">
         <div class="row">
             <div class="col-6 form-group">
@@ -107,7 +109,7 @@
                 // {data:"keterangan"},
                 {data:"id_kartu",
                     render: function (data, type, row) {
-                        var e = '<button class="btn btn-sm btn-primary" onclick=lihatKartuUjian("'+data+'")><i class="la la-eye"></i></button>';
+                        var e = '<a target="iframe1" class="btn btn-sm btn-primary" href="<?= base_url("Kartu/cetakKartuUjian/") ?>'+data+'"><i class="la la-eye"></i></a>';
                         var d = '<button class="btn btn-sm btn-danger" onclick=deleteSiswaFromUjian("'+data+'")><i class="la la-trash"></i></button>';
 
                         return '<div class="form-group btn-group btn-group-sm btn-block">'+
@@ -124,8 +126,9 @@
             dom: '<"toolbar tableDataListSiswa">frtip'
         });
 
+        var id = $('#modal').data('id');
         $("div.tableDataListSiswa").html(
-            '<button class="btn btn-md btn-primary" style="margin-top: 10px; cursor:default;">List Siswa</button>&nbsp;'
+            '<a target="iframe1" href="<?= base_url("Kartu/exportToExcel/") ?>'+id+'" class="btn btn-md btn-success" style="margin-top: 10px; color:white;"><i class="la la-file-excel-o"></i> Export</a>&nbsp;'
         );
 
         tableDataListSiswa.on( 'order.dt search.dt', function () {
@@ -133,10 +136,6 @@
                 cell.innerHTML = i+1;
             } );
         }).draw();
-
-        function lihatKartuUjian(id) {
-            
-        }
 
         function deleteSiswaFromUjian(id) {
             Swal.fire({

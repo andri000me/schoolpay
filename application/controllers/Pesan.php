@@ -72,14 +72,14 @@ class Pesan extends Core_Controller{
             if (count($results) < 1) {
                 $results[] = array(
                     'err'          => true,
-                    'profile_pic'  => base_url('app-assets/images/profile.png'),
+                    'profile_pic'  => base_url('app-assets/images/no-profile.png'),
                 );
             }
         }
         else{
             $results[] = array(
                 'err'          => true,
-                'profile_pic'  => base_url('app-assets/images/profile.png'),
+                'profile_pic'  => base_url('app-assets/images/no-profile.png'),
             );
         }
 

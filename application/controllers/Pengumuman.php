@@ -438,7 +438,11 @@ class Pengumuman extends Core_Controller{
                 }
             }
             else{
-                $callback .= "";
+                $callback .= "<div class='row mb-0 mt-2'>";
+                $callback .=    "<div class='col-12'>";
+                $callback .=        "<h3 class='card-title text-center'> Tidak ada pengumuman </h3>";
+                $callback .=    "</div>";
+                $callback .= "</div>";
             }
 
             echo $callback;

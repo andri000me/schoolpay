@@ -180,6 +180,7 @@
 
                 $('#modal').data('id', 0);
                 $('#modal').modal('show');
+                $('.modal-footer').children('#btnSaveModal').show();
             });
 
             $('#editUjian').click(function(){
@@ -201,6 +202,7 @@
 
                 $('#modal').data('id', id);
                 $('#modal').modal('show');
+                $('.modal-footer').children('#btnSaveModal').show();
             });
 
             $('#deleteUjian').click(function(){

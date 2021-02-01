@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="nama">Nama Ujian</label>
                 <div class="position-relative has-icon-left">
-                    <input type="text" id="nama" class="form-control" name="nama" placeholder="Nama" required>
+                    <input type="text" id="nama" class="form-control" name="nama" placeholder="contoh : Ujian Berbasis Komputer" required>
                     <div class="form-control-position">
                         <i class="la la-font"></i>
                     </div>

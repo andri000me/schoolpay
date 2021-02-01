@@ -227,13 +227,29 @@
                         </a>
                     </li>
 
-                    <?php if ($user_detail['status'] == 'admin') { ?>
+                    <li class="nav-item">
+                        <a 
+                            <?php if ($user_detail['status'] != 'admin') { ?>
+                                onClick="bukaKartu();" href="#" 
+                            <?php } else{ ?>
+                                href="<?= base_url('Kartu/admin'); ?>" 
+                            <?php } ?>
+                        >
+                            <i class="ft-layout"></i>
+                            <span class="menu-title" data-i18n="">Kartu Ujian</span>
+                        </a>
+                    </li>
+
+                    <?php if ($user_detail['status'] != 'admin') { ?>
                         <li class="nav-item">
-                            <a href="<?= base_url('Kartu/admin'); ?>"><i class="ft-layout"></i>
-                                <span class="menu-title" data-i18n="">Kartu Ujian</span>
+                            <a href="<?= base_url('Keuangan/Pembayaran');?>">
+                                <i class="la la-money"></i>
+                                <span class="menu-title" data-i18n="">Pembayaran</span>
                             </a>
                         </li>
+                    <?php } ?>
 
+                    <?php if ($user_detail['status'] == 'admin') { ?>
                         <li class="nav-item has-sub">
                             <a href="#"><i class="la la-money"></i>
                                 <span class="menu-title" data-i18n="">Keuangan</span>
@@ -271,21 +287,6 @@
                                 <li><a class="menu-item" href="<?= base_url('Master/TahunAjaran'); ?>">Data Tahun Ajaran</a></li>
                                 <li><a class="menu-item" href="<?= base_url('Master/ProgramStudi'); ?>">Data Program Studi</a></li>
                             </ul>
-                        </li>
-                    <?php } ?>
-
-                    <?php if ($user_detail['status'] != 'admin') { ?>
-                        <li class="nav-item">
-                            <a href="<?= base_url('Kartu'); ?>"><i class="ft-layout"></i>
-                                <span class="menu-title" data-i18n="">Kartu Ujian</span>
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a href="<?= base_url('Keuangan/Pembayaran');?>">
-                                <i class="la la-money"></i>
-                                <span class="menu-title" data-i18n="">Pembayaran</span>
-                            </a>
                         </li>
                     <?php } ?>
 
@@ -364,6 +365,17 @@
             $('#modaldialog').addClass('modal-lg');
             $('#modaltitle').html('Pengumuman');
             $('#modalbody').load("<?php echo base_url("Pengumuman/index");?>");
+            $('#modal').modal('show');
+            $('.modal-footer').hide();
+            $('.modal-footer').children('#btnSaveModal').hide();
+        }
+
+        function bukaKartu(){
+            $('#modalheader').removeClass('bg-info').addClass('bg-primary white');
+            $('#modaltitle').addClass('white');
+            $('#modaldialog').addClass('modal-lg');
+            $('#modaltitle').html('Kartu Ujian');
+            $('#modalbody').load("<?php echo base_url("Kartu/index");?>");
             $('#modal').modal('show');
             $('.modal-footer').hide();
             $('.modal-footer').children('#btnSaveModal').hide();
