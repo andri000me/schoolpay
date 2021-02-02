@@ -1295,8 +1295,8 @@ class Rekapitulasi extends Core_Controller{
     }
 
     function rekapAll(){
-        require_once APPPATH."/libraries/PHPExcel/PHPExcel.php";
-        require_once APPPATH."/libraries/PHPExcel/PHPExcel/Writer/Excel2007.php";
+        require_once APPPATH."/libraries/PHPExcel.php";
+        require_once APPPATH."/libraries/PHPExcel/Writer/Excel2007.php";
         $objPHPExcel = new PHPExcel();
         $debitku = 0;
         $kreditku = 0;

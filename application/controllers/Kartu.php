@@ -728,6 +728,7 @@ class Kartu extends Core_Controller{
     	$query = "
     		SELECT 
 				ujian.id_ujian,
+				ujian.nama_ujian,
 			    kartu.id_kartu,
 			    kartu.nis,
                 siswa.nama,
@@ -753,8 +754,56 @@ class Kartu extends Core_Controller{
 
     	$res = $this->M_wsbangun->getData_by_query('default', $query);
 
-    	$content = array('dataujian' => $res);
-		$this->load->view('kartu/exportToExcel', $content);
+    	require_once APPPATH."/libraries/PHPExcel.php";
+        require_once APPPATH."/libraries/PHPExcel/Writer/Excel2007.php";
+        $objPHPExcel = new PHPExcel();
+
+        $aktifSheet = 0;
+        $data_huruf = 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z AA AB AC AD AE AF AG AH AI AJ AK AL AM AN AO AP AQ AR AS AT AU AV AW AX AY AZ BA BB BC BD BE BF BG BH BI BJ BK BL BM BN BO BP BQ BR BS BT BU BV BW BX BY BZ CA CB CD CC CE CF CG CH CI CJ CK CL CM CN CO CP CQ CR CS CT CU CV CW CX CY CZ DA DB DC DD DE DF DG DH DI DJ DK DL DM DN DO DP DQ DR DS DT DU DV DW DX DY DZ EA EB EC ED EE EF EH EI EJ EK EL EM EN EO EP EQ ER ES ET EU EV EW EX EY EZ
+        ';
+        $data_huruf = explode(' ', $data_huruf);
+        
+        $objPHPExcel->setActiveSheetIndex($aktifSheet);
+        $ws = $objPHPExcel->getActiveSheet();
+        $ws->setTitle('List Siswa');
+		$ws->getColumnDimension('A')->setWidth(4);
+		$ws->getColumnDimension('B')->setAutoSize(true);
+		$ws->getColumnDimension('C')->setAutoSize(true);
+		$ws->getColumnDimension('D')->setAutoSize(true);
+		$ws->getColumnDimension('E')->setAutoSize(true);
+
+		$posisiY = 1;
+        $posisiX = 0;
+        
+        $ws->setCellValue($data_huruf[$posisiX].$posisiY, 'No');
+        $posisiX += 1;
+        $ws->setCellValue($data_huruf[$posisiX].$posisiY, 'nama');
+        $posisiX += 1;
+        $ws->setCellValue($data_huruf[$posisiX].$posisiY, 'kelas');
+        $posisiX += 1;
+        $ws->setCellValue($data_huruf[$posisiX].$posisiY, 'username');
+        $posisiX += 1;
+        $ws->setCellValue($data_huruf[$posisiX].$posisiY, 'password');
+
+        $no=1;
+        foreach ($res as $val) {
+            $posisiY += 1;
+            $posisiX = 0;
+            $ws->setCellValue($data_huruf[$posisiX].$posisiY, $no);
+            $posisiX += 1;
+            $ws->setCellValue($data_huruf[$posisiX].$posisiY, $val->nama);
+            $posisiX += 1;
+            $ws->setCellValue($data_huruf[$posisiX].$posisiY, $val->kelas."-".$val->program_studi."-".$val->kode_kelas);
+            $posisiX += 1;
+            $ws->setCellValue($data_huruf[$posisiX].$posisiY, $val->username);
+            $posisiX += 1;
+            $ws->setCellValue($data_huruf[$posisiX].$posisiY, $val->password);
+            $no += 1;
+        }
+
+        $writer = new PHPExcel_Writer_Excel2007($objPHPExcel);
+        $writer->save(APPPATH.'../data/list_siswa/'.$res[0]->id_ujian.'_'.$res[0]->nama_ujian.'.xlsx');
+        redirect('data/list_siswa/'.$res[0]->id_ujian.'_'.$res[0]->nama_ujian.'.xlsx');
 	}
 
 	private function generatePassword($length = 10) {
