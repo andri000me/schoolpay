@@ -754,7 +754,6 @@ class Kartu extends Core_Controller{
 		        $filepath = '/data/';
 		        $fileurl  = base_url() . $filepath . $filename;
 		        header("Content-type: application/vnd.ms-excel");
-				// header("Content-Disposition: attachment; filename=$filename");
 				header('Content-Disposition: attachment; filename="'.$filename.'"');
 				header('Cache-Control: max-age=0');
     		// FILE
@@ -813,19 +812,7 @@ class Kartu extends Core_Controller{
 	        }
 
 	        $writer = new PHPExcel_Writer_Excel2007($objPHPExcel);
-	        // ob_end_clean();
-
-	        
 			$writer->save('php://output');
-	        // $writer->save(APPPATH.'../'. $filepath .$filename);
-
-			// header('Content-Type: application/octet-stream');
-			// header("Content-Transfer-Encoding: Binary");
-			// header("Content-disposition: attachment; filename=".$filename);
-			// readfile($fileurl);
-
-			// sleep(5);
-	        // unlink(APPPATH.'../'. $filepath .$filename);
     	}
 	}
 
