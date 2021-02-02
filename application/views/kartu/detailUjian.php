@@ -128,7 +128,7 @@
         });
 
         $("div.tableDataListSiswa").html(
-            '<button id="exportToExcel" class="btn btn-md btn-success" style="margin-top: 10px; color:white;">' +
+            '<button id="exportToExcel" class="btn btn-md btn-success pull-up" style="margin-top: 10px; color:white;">' +
                 '<i class="la la-file-excel-o"></i> Export' +
             '</button> &nbsp;' 
             // '<select class="form-control select2" id="listkelas">' + 

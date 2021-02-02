@@ -813,9 +813,8 @@ class Kartu extends Core_Controller{
 			header("Content-Transfer-Encoding: Binary");
 			header("Content-disposition: attachment; filename=".$filename);
 			readfile($fileurl);
-			
-			sleep(5);
 
+			sleep(5);
 	        unlink(APPPATH.'../'. $filepath .$filename);
     	}
 	}
