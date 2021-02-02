@@ -814,8 +814,8 @@ class Kartu extends Core_Controller{
 			header("Content-disposition: attachment; filename=".$filename);
 			readfile($fileurl);
 
-			sleep(5);
-	        unlink(APPPATH.'../'. $filepath .$filename);
+			// sleep(5);
+	        // unlink(APPPATH.'../'. $filepath .$filename);
     	}
 	}
 
