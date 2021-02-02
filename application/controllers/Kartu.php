@@ -749,6 +749,16 @@ class Kartu extends Core_Controller{
     	$res = $this->M_wsbangun->getData_by_query('default', $query);
 
     	if ($res) {
+    		// FILE
+	    		$filename = 'ListSiswa_'. str_replace(' ', '-', $res[0]->nama_ujian) .'_'. $res[0]->id_ujian . '.xlsx';
+		        $filepath = '/data/';
+		        $fileurl  = base_url() . $filepath . $filename;
+		        header("Content-type: application/vnd.ms-excel");
+				// header("Content-Disposition: attachment; filename=$filename");
+				header('Content-Disposition: attachment; filename="'.$filename.'"');
+				header('Cache-Control: max-age=0');
+    		// FILE
+
     		// INIT
 		    	require_once APPPATH."/libraries/PHPExcel.php";
 		        require_once APPPATH."/libraries/PHPExcel/Writer/Excel2007.php";
@@ -802,15 +812,10 @@ class Kartu extends Core_Controller{
 	            $no += 1;
 	        }
 
-	        $filename = 'ListSiswa_'. str_replace(' ', '-', $res[0]->nama_ujian) .'_'. $res[0]->id_ujian . '.xlsx';
-	        $filepath = '/data/';
-	        $fileurl  = base_url() . $filepath . $filename;
-
 	        $writer = new PHPExcel_Writer_Excel2007($objPHPExcel);
-	        ob_end_clean();
+	        // ob_end_clean();
 
-	        header("Content-type: application/vnd.ms-excel");
-			header("Content-Disposition: attachment; filename=$filename");
+	        
 			$writer->save('php://output');
 	        // $writer->save(APPPATH.'../'. $filepath .$filename);
 
