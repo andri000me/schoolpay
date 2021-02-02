@@ -808,11 +808,13 @@ class Kartu extends Core_Controller{
 
 	        $writer = new PHPExcel_Writer_Excel2007($objPHPExcel);
 	        $writer->save(APPPATH.'../'. $filepath .$filename);
+	        sleep(1);
 
 			header('Content-Type: application/octet-stream');
 			header("Content-Transfer-Encoding: Binary");
 			header("Content-disposition: attachment; filename=".$filename);
 			readfile($fileurl); 
+			sleep(5);
 
 	        unlink(APPPATH.'../'. $filepath .$filename);
     	}
