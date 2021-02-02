@@ -807,10 +807,15 @@ class Kartu extends Core_Controller{
 	        $fileurl  = base_url() . $filepath . $filename;
 
 	        $writer = new PHPExcel_Writer_Excel2007($objPHPExcel);
-	        ob_end_clean();
-
+	        // ob_end_clean();
 	        header("Content-type: application/vnd.ms-excel");
 			header("Content-Disposition: attachment; filename=$filename");
+
+	        for ($i = 0; $i < ob_get_level(); $i++) {
+			   ob_end_flush();
+			}
+			ob_implicit_flush(1);
+			ob_clean();
 			$writer->save('php://output');
     	}
 	}
