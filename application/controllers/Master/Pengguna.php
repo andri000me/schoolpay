@@ -12,18 +12,19 @@ class Pengguna extends Core_Controller{
     }
 
     public function getTableAdmin(){
+        $callback = array();
+        
         $where = array('status'=>'admin');
         $res = $this->M_wsbangun->getData_by_criteria('default', 'pengguna', $where);
         if ($res) {
             $callback = $res;
         }
-        else{
-        	$callback = null;
-        }
         echo json_encode($callback);
     }
 
     public function getTableSiswa(){
+        $callback = array();
+
         $query = "
             SELECT
                 grupsiswa.nis,
@@ -72,9 +73,6 @@ class Pengguna extends Core_Controller{
         if ($res) {
             $callback = $res;
         }
-        else{
-            $callback = null;
-        }
         echo json_encode($callback);
     }
 
@@ -83,13 +81,12 @@ class Pengguna extends Core_Controller{
     }
 
     public function getByID($id=""){
+        $callback = array();
+
 	    $where=array('id_pengguna'=>$id);
 	    $res = $this->M_wsbangun->getData_by_criteria('default', 'pengguna',$where);
 	    if ($res) {
             $callback = $res;
-        }
-        else{
-        	$callback = null;
         }
         echo json_encode($callback);
 	}

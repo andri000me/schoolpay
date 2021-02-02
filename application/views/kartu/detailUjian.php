@@ -1,4 +1,5 @@
 <!-- CONTENT -->
+    <div id="iframe1"></div>
     <iframe name="iframe1" style="display: none;"></iframe>
 
     <div class="container">
@@ -126,9 +127,13 @@
             dom: '<"toolbar tableDataListSiswa">frtip'
         });
 
-        var id = $('#modal').data('id');
         $("div.tableDataListSiswa").html(
-            '<a target="iframe1" href="<?= base_url("Kartu/exportToExcel/") ?>'+id+'" class="btn btn-md btn-success" style="margin-top: 10px; color:white;"><i class="la la-file-excel-o"></i> Export</a>&nbsp;'
+            '<button id="exportToExcel" class="btn btn-md btn-success" style="margin-top: 10px; color:white;">' +
+                '<i class="la la-file-excel-o"></i> Export' +
+            '</button> &nbsp;' 
+            // '<select class="form-control select2" id="listkelas">' + 
+            //     '<option value="kelas">kelas</option>' +
+            // '</select>'
         );
 
         tableDataListSiswa.on( 'order.dt search.dt', function () {
@@ -136,6 +141,18 @@
                 cell.innerHTML = i+1;
             } );
         }).draw();
+
+        $('#exportToExcel').click(function () {
+            if (tableDataListSiswa['context'][0]['aiDisplay'].length > 0) {
+                var id = $('#modal').data('id');
+                var link = '<?= base_url("Kartu/exportToExcel/") ?>'+id;
+
+                $("#iframe1").html('<iframe src="'+link+'" style="display: none;"></iframe>');
+            }
+            else{
+                Swal.fire("Error", "Table is empty", "error");
+            }
+        });
 
         function deleteSiswaFromUjian(id) {
             Swal.fire({

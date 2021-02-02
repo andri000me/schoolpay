@@ -36,7 +36,7 @@
                                                 <th>Nama Ujian</th>
                                                 <th>Tanggal</th>
                                                 <th>Tipe</th>
-                                                <th>Max siswa</th>
+                                                <!-- <th>Max siswa</th> -->
                                                 <th>Detail</th>
                                             </thead>
                                             <tbody>
@@ -135,7 +135,7 @@
                             return ret;
                         }
                     },
-                    {data:"max_siswa"},
+                    // {data:"max_siswa"},
                     {data:"id_ujian",
                         render: function (data, type, row) {
                             return '<button class="btn btn-block btn-primary pull-up" onclick=detailUjian("'+data+'")><i class="la la-binoculars"></i></button>';

@@ -12,12 +12,11 @@ class ProgramStudi extends Core_Controller{
     }
 
     public function getTable(){
+        $callback = array();
+        
         $res = $this->M_wsbangun->getData('default', 'program_studi');
         if ($res) {
             $callback = $res;
-        }
-        else{
-        	$callback = null;
         }
         echo json_encode($callback);
     }
@@ -27,13 +26,12 @@ class ProgramStudi extends Core_Controller{
     }
 
     public function getByID($id=""){
+        $callback = array();
+
 	    $where=array('id_program_studi'=>trim($id));
 	    $res = $this->M_wsbangun->getData_by_criteria('default', 'program_studi',$where);
 	    if ($res) {
             $callback = $res;
-        }
-        else{
-        	$callback = null;
         }
         echo json_encode($callback);
 	}

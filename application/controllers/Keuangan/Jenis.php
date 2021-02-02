@@ -14,6 +14,8 @@ class Jenis extends Core_Controller{
 	    }
 
 	    public function getTable(){
+	    	$callback = array();
+
 	    	$query = "
 	    		SELECT 
 	    			keuangan_jenis.*, 
@@ -31,9 +33,6 @@ class Jenis extends Core_Controller{
 	        if ($res) {
 	            $callback = $res;
 	        }
-	        else{
-	        	$callback = null;
-	        }
 	        echo json_encode($callback);
 	    }
 
@@ -50,13 +49,12 @@ class Jenis extends Core_Controller{
 	    }
 
 	    public function getByID($id=""){
+	    	$callback = array();
+
 		    $where=array('id_jenis'=>$id);
 		    $res = $this->M_wsbangun->getData_by_criteria('default', 'keuangan_jenis',$where);
 		    if ($res) {
 	            $callback = $res;
-	        }
-	        else{
-	        	$callback = null;
 	        }
 	        echo json_encode($callback);
 		}
@@ -185,6 +183,8 @@ class Jenis extends Core_Controller{
 	    }
 
 	    public function getTableTarif(){
+	    	$callback = array();
+
 	    	$tahun_ajaran 	= $this->input->post('tahun_ajaran', true);
 	    	$listkelas 		= $this->input->post('listkelas', true);
 	    	$jenis 			= $this->input->post('jenis', true);
@@ -235,17 +235,12 @@ class Jenis extends Core_Controller{
 				";
 	    		
 		    	$res = $this->M_wsbangun->getData_by_query('default', $query);
-	    	}
-	    	else{
-	    		$res = null;
+		        
+		        if ($res) {
+		            $callback = $res;
+		        }
 	    	}
 
-	        if ($res) {
-	            $callback = $res;
-	        }
-	        else{
-	        	$callback = array();
-	        }
 	        echo json_encode($callback);
 	    }
 
@@ -382,6 +377,8 @@ class Jenis extends Core_Controller{
 		}
 
 		public function getListSiswa($kelas){
+			$callback = array();
+
 			$kelasnya = explode('.', $kelas);
 
 			$query = "
@@ -402,9 +399,6 @@ class Jenis extends Core_Controller{
 
 			if ($siswa) {
 	            $callback = $siswa;
-	        }
-	        else{
-	        	$callback = array();
 	        }
 	        echo json_encode($callback);
 		}

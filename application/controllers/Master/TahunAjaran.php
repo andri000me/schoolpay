@@ -12,12 +12,11 @@ class TahunAjaran extends Core_Controller{
     }
 
     public function getTable(){
+        $callback = array();
+
         $res = $this->M_wsbangun->getData('default', 'tahun_ajaran');
         if ($res) {
             $callback = $res;
-        }
-        else{
-        	$callback = null;
         }
         echo json_encode($callback);
     }
@@ -27,13 +26,12 @@ class TahunAjaran extends Core_Controller{
     }
 
     public function getByID($id=""){
+        $callback = array();
+        
 	    $where=array('tahun_ajaran'=>$id);
 	    $res = $this->M_wsbangun->getData_by_criteria('default', 'tahun_ajaran',$where);
 	    if ($res) {
             $callback = $res;
-        }
-        else{
-        	$callback = null;
         }
         echo json_encode($callback);
 	}

@@ -12,6 +12,8 @@ class Siswa extends Core_Controller{
     }
 
     public function getTable(){
+        $callback = array();
+
     	$where = '';
     	if($_GET['kelas'] != ''){
     		$kelaskunya = @explode('.', $_GET['kelas']);
@@ -19,28 +21,26 @@ class Siswa extends Core_Controller{
                              data_siswa.program_studi = '".$kelaskunya[1]."' AND 
                              data_siswa.kode_kelas = '".$kelaskunya[2]."' ";
     	}
-    	$query = "SELECT 
-    				data_siswa.*, 
-    				kelas.kelas 
-    			FROM 
-    				data_siswa 
-    			INNER JOIN 
-    				kelas 
-    			ON 
-    				data_siswa.status_kelas = kelas.id_kelas "
-    				. $where .
-    			" ORDER BY 
-    				data_siswa.status_kelas, 
-    				data_siswa.program_studi, 
-    				data_siswa.kode_kelas, 
-    				data_siswa.nama
+    	$query = "
+        SELECT 
+			data_siswa.*, 
+			kelas.kelas 
+		FROM 
+			data_siswa 
+		INNER JOIN 
+			kelas 
+		ON 
+			data_siswa.status_kelas = kelas.id_kelas "
+			. $where .
+		" ORDER BY 
+			data_siswa.status_kelas, 
+			data_siswa.program_studi, 
+			data_siswa.kode_kelas, 
+			data_siswa.nama
     	";
         $res = $this->M_wsbangun->getData_by_query('default', $query);
         if ($res) {
             $callback = $res;
-        }
-        else{
-        	$callback = array();
         }
         echo json_encode($callback);
     }
@@ -160,14 +160,13 @@ class Siswa extends Core_Controller{
     }
 
     public function getByID($id=""){
+        $callback = array();
+
 	    $where=array('nis'=>$id);
 	    $res = $this->M_wsbangun->getData_by_criteria('default', 'data_siswa',$where);
 	    // var_dump($res);die;
 	    if ($res) {
             $callback = $res;
-        }
-        else{
-        	$callback = null;
         }
         echo json_encode($callback);
 	}

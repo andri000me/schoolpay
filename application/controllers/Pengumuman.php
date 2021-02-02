@@ -19,6 +19,8 @@ class Pengumuman extends Core_Controller{
 
     // ========================== ADMIN
         public function getDataAdmin(){
+            $callback = array();
+
             $this->adminOnly();
             $query = "
                 SELECT 
@@ -43,9 +45,6 @@ class Pengumuman extends Core_Controller{
             if ($res) {
                 $callback = $res;
             }
-            else{
-                $callback = null;
-            }
             echo json_encode($callback);
         }
 
@@ -64,6 +63,8 @@ class Pengumuman extends Core_Controller{
         }
 
         public function getTablePenerima($id){
+            $callback = array();
+
             $this->adminOnly();
             $query = "
                 SELECT
@@ -93,9 +94,6 @@ class Pengumuman extends Core_Controller{
             $res = $this->M_wsbangun->getData_by_query('default', $query);
             if ($res) {
                 $callback = $res;
-            }
-            else{
-                $callback = null;
             }
             echo json_encode($callback);
         }
@@ -357,6 +355,8 @@ class Pengumuman extends Core_Controller{
 
     // ========================== SISWA
         public function getPengumuman(){
+            $callback = array();
+            
             $query = "
                 SELECT 
                     hd.id_pengumuman,
@@ -378,9 +378,6 @@ class Pengumuman extends Core_Controller{
             $res = $this->M_wsbangun->getData_by_query('default', $query);
             if ($res) {
                 $callback = $res;
-            }
-            else{
-                $callback = null;
             }
             echo json_encode($callback);
         }

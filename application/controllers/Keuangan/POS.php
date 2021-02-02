@@ -16,9 +16,6 @@ class POS extends Core_Controller{
         if ($res) {
             $callback = $res;
         }
-        else{
-        	$callback = null;
-        }
         echo json_encode($callback);
     }
 
@@ -31,9 +28,6 @@ class POS extends Core_Controller{
 	    $res = $this->M_wsbangun->getData_by_criteria('default', 'keuangan_pos',$where);
 	    if ($res) {
             $callback = $res;
-        }
-        else{
-        	$callback = null;
         }
         echo json_encode($callback);
 	}
