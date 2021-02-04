@@ -4,7 +4,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-if (base_url() == 'https://schoolpay.rendzzx.com/') {
+if (base_url() == 'https://schoolpay.rendzzx.com/' || base_url() == 'http://schoolpay.rendzzx.com/' || base_url() == 'https://www.schoolpay.rendzzx.com/' || base_url() == 'http://www.schoolpay.rendzzx.com/') {
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['username'] = 'rendzzxc_schoolpay';
 	$db['default']['password'] = 'schoolpayadmin12345';
