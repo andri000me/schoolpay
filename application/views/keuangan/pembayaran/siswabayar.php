@@ -115,9 +115,6 @@
                                     <button class="btn btn-success white" id="onlinepay">
                                         Online Pay
                                     </button>
-                                    <button class="btn btn-info" id="cashpay">
-                                        Cash
-                                    </button>
                                 </div>
                             </div>
                         </div>
