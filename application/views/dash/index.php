@@ -123,7 +123,7 @@
                     </div>
 
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-                        <a href="<?= base_url('Admin/Siswa/Siswa'); ?>" class="warning">
+                        <a href="<?= base_url('Siswa/Siswa'); ?>" class="warning">
                             <div class="card pull-up">
                                 <div class="card-content">
                                     <div class="card-body">
@@ -143,7 +143,7 @@
                     </div>
 
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-                        <a href="<?= base_url('Admin/Master/ProgramStudi'); ?>" class="primary">
+                        <a href="<?= base_url('Master/ProgramStudi'); ?>" class="primary">
                             <div class="card pull-up">
                                 <div class="card-content">
                                     <div class="card-body">
