@@ -25,7 +25,7 @@ class BiodataSekolah extends Core_Controller{
 
         if ($_FILES) {
         	$allowed = array("image/jpeg", "image/jpg", "image/png");
-	    	$path = $_SERVER['DOCUMENT_ROOT'] . '/schoolpay/';
+	    	$path = $this->getPath();
         	$data = $this->M_wsbangun->getData('default', 'biodata_sekolah');
 
         	$logosekolah = $_FILES['logosekolah'];
@@ -116,5 +116,14 @@ class BiodataSekolah extends Core_Controller{
         }
 
         echo json_encode($callback);
+    }
+
+    public function getPath(){
+    	if ($this->is_live()) {
+    		return $_SERVER['DOCUMENT_ROOT'] . '/';
+    	}
+    	else {
+	    	return $_SERVER['DOCUMENT_ROOT'] . '/schoolpay/';
+    	}
     }
 }

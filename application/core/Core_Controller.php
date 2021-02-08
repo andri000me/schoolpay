@@ -7,6 +7,16 @@ class Core_Controller extends CI_Controller{
         $this->load->model('M_wsbangun');
     }
 
+    public function is_live(){
+        if (base_url() == 'https://schoolpay.rendzzx.com/' || base_url() == 'http://schoolpay.rendzzx.com/' || base_url() == 'https://www.schoolpay.rendzzx.com/' || base_url() == 'http://www.schoolpay.rendzzx.com/') {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
     public function auth_check(){
         $is_logged = $this->session->userdata("is_login");
         
