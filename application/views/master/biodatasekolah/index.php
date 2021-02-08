@@ -11,7 +11,7 @@
                             <div class="card-content">
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-                                        <form class="form-horizontal" id="frmEditor" action="<?php echo base_url('Master/BiodataSekolah/editBio'); ?>" method="post">
+                                        <form class="form-horizontal" id="frmEditor" action="<?php echo base_url('Master/BiodataSekolah/editBio'); ?>" method="post" enctype="multipart/form-data">
                                             <div class="form-body">
 
                                                 <div class="row">
@@ -170,6 +170,25 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="logosekolah">Logo</label>
+                                                            <input type="file" accept="image/x-png,image/jpeg,image/jpg" id="logosekolah" class="form-control" name="logosekolah" placeholder="Logo">
+                                                        </div>
+                                                        <br>
+                                                        <img id="img-logo" class="media" src="" alt="logo" width="300">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="stample">STAMPLE</label>
+                                                            <input type="file" accept="image/x-png,image/jpeg,image/jpg" id="stample" class="form-control" name="stample" placeholder="Stample">
+                                                        </div>
+                                                        <br>
+                                                        <img id="img-stample" class="media" src="" alt="stample" width="300">
+                                                    </div>
+                                                </div>
                                                 
                                             </div>
 
@@ -316,12 +335,21 @@
                 if (event.handled !== true) {
                     event.handled = true;
                     if ($('#frmEditor').valid()) {
-                        var datafrm = $('#frmEditor').serializeArray();
+                        var logosekolah = $('#logosekolah').prop('files')[0];
+                        var stample = $('#stample').prop('files')[0];
+                        
+                        var form_data = new FormData($('#frmEditor')[0]);
+                        form_data.append('logosekolah', logosekolah);
+                        form_data.append('stample', stample);
+
                         $.ajax({
                             url : "<?php echo base_url('Master/BiodataSekolah/editBio');?>",
                             type:"POST",
-                            data: datafrm,
+                            data: form_data,
                             dataType:"json",
+                            cache: false,
+                            contentType: false,
+                            processData: false,
                             success:function(event, data){
                                 if (event.Error == false) {
                                     Swal.fire({
@@ -373,6 +401,8 @@
                     $('#tlp').val(data[0].tlp);
                     $('#kepalaSekolah').val(data[0].kepala_sekolah);
                     $('#nip').val(data[0].nip_kepala_sekolah);
+                    $('#img-logo').attr('src', '<?= base_url() ?>' + data[0].logo);
+                    $('#img-stample').attr('src', '<?= base_url() ?>' + data[0].stample);
                 });
             }
 

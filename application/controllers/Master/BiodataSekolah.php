@@ -23,6 +23,55 @@ class BiodataSekolah extends Core_Controller{
             'Error' => false
         );
 
+        if ($_FILES) {
+        	$allowed = array("image/jpeg", "image/jpg", "image/png");
+	    	$path = $_SERVER['DOCUMENT_ROOT'] . '/schoolpay/';
+        	$data = $this->M_wsbangun->getData('default', 'biodata_sekolah');
+
+        	$logosekolah = $_FILES['logosekolah'];
+        	$stample = $_FILES['stample'];
+
+        	if ($logosekolah['tmp_name'] != "") {
+        		if ( in_array($logosekolah['type'], $allowed) ) {
+	        		$fromPath = $path . $data[0]->logo;
+	    			if (file_exists($fromPath)){
+						unlink($fromPath);
+					}
+
+					$destinationPath =  "data/biodatasekolah/logo." . pathinfo($logosekolah['name'], PATHINFO_EXTENSION);
+					move_uploaded_file($logosekolah['tmp_name'], $path . $destinationPath);
+
+					$dataupdate = array('logo' => $destinationPath);
+					$where = array('id' => 1);
+					$update = $this->M_wsbangun->updateData('default', 'biodata_sekolah', $dataupdate, $where);
+        		}
+        		else {
+        			$callback['Message'] = 'tipe file tidak di sesuai';
+	                $callback['Error'] = true;
+        		}
+        	}
+
+        	if ($stample['tmp_name'] != "") {
+        		if ( in_array($stample['type'], $allowed) ) {
+	        		$fromPath = $path . $data[0]->stample;
+	    			if (file_exists($fromPath)){
+						unlink($fromPath);
+					}
+
+					$destinationPath =  "data/biodatasekolah/stample." . pathinfo($stample['name'], PATHINFO_EXTENSION);
+					move_uploaded_file($stample['tmp_name'], $path . $destinationPath);
+
+					$dataupdate = array('stample' => $destinationPath);
+					$where = array('id' => 1);
+					$update = $this->M_wsbangun->updateData('default', 'biodata_sekolah', $dataupdate, $where);
+        		}
+        		else {
+        			$callback['Message'] = 'tipe file tidak di sesuai';
+	                $callback['Error'] = true;
+        		}
+        	}
+        }
+
         if($_POST){
         	$sekolah 			= $this->security->xss_clean($this->input->post('namaSekolah'));
 	        $nisn 				= $this->security->xss_clean($this->input->post('nisn'));
