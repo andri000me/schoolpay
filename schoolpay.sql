@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 01, 2021 at 01:38 PM
+-- Generation Time: Mar 03, 2021 at 12:44 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -3828,6 +3828,7 @@ CREATE TABLE `pengumuman_hd` (
   `id_pengumuman` varchar(30) NOT NULL,
   `judul` varchar(255) NOT NULL,
   `message` text NOT NULL,
+  `attachment` varchar(255) DEFAULT NULL,
   `tanggal` datetime NOT NULL,
   `petugas` varchar(50) NOT NULL,
   `tipe` enum('general','pembayaran') DEFAULT 'general'
@@ -3914,6 +3915,13 @@ CREATE TABLE `ujian` (
   `tipe_ujian` enum('online','offline') DEFAULT 'offline'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `ujian`
+--
+
+INSERT INTO `ujian` (`id_ujian`, `nama_ujian`, `tanggal_ujian`, `audit_user`, `keterangan`, `max_siswa`, `tipe_ujian`) VALUES
+(1, 'Ujian Nasional', '2021-02-11 10:25:00', '1', 't', 20, 'offline');
+
 -- --------------------------------------------------------
 
 --
@@ -3929,6 +3937,13 @@ CREATE TABLE `ujian_kartu` (
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ujian_kartu`
+--
+
+INSERT INTO `ujian_kartu` (`id_ujian`, `id_kartu`, `nis`, `audit_user`, `ruangan`, `username`, `password`) VALUES
+(1, 5, '1000031', '1', '1 - R1', '1000031', 'w85rW');
 
 --
 -- Indexes for dumped tables
@@ -4130,12 +4145,12 @@ ALTER TABLE `rombel`
 -- AUTO_INCREMENT for table `ujian`
 --
 ALTER TABLE `ujian`
-  MODIFY `id_ujian` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ujian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `ujian_kartu`
 --
 ALTER TABLE `ujian_kartu`
-  MODIFY `id_kartu` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `id_kartu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
